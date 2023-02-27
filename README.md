@@ -7,25 +7,32 @@ The project takes in an input file in .xyz and returns the optimized structure i
 3.	determine the potential using the distance in 2.
 4.	update the XYZ coordinates of the two atoms as guided by the Nelder Mead algorithm.
 
+## Further Features
+- [ ] Randomize the initial positions of atoms
+
 ## Progrgramming Tasks:
-- [ ] Create a XYZ file of 1 Ar atom
-- [ ] Create a XYZ file of 2 Ar atoms
-- [ ] Parse the XYZ file
-- [ ] Determine the distance between the 2 Ar atoms
-- [ ] Determine LP potential energy between the 2 Ar atoms
+- [ ] Save the new coordinates into a xyz file.
+- [ ] Apply Nelder–Mead method to determine optimal coordinates
+- [ ] Express distance as a function of 2 points of x, y, z
+- [ ] Express the coordinates as a parameters
+- [x] Determine LP potential energy between the 2 Ar 
+- [x] Create a XYZ file of 2 Ar atoms using Avagadro
+- [x] Parse the XYZ file using the xyz_py library
+- [x] Determine the distance between the 2 Ar atomsatoms
 - [x] Implement Lennard-Jones potential for Argon
 - [x] Plot the potential energy curve
 - [x] Determine the gradient using 
 
-## Tools
+## Toolsgit
 Visual Studio Shortcuts:
 https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf
 
 ## Keyboard Shortcuts:
-`CTRL` + ```
+`CTRL` + ``` - Toggle Terminal
+`CTRL` + g - Go to Line
+
 
 ## To run the file
-
 ```
 docker build -t main-python .        
 docker run --name main-python-app main-python

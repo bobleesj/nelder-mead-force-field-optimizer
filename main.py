@@ -15,8 +15,8 @@ alpha = 3.4 # Angstroms
 
 # LJ function
 def LJPotential(x):
-    y = 4 * eps * ((alpha/x)**12 - (alpha/x)**6)
-    return y
+  y = 4 * eps * ((alpha/x)**12 - (alpha/x)**6)
+  return y
 
 def func(x):
   y = 4 * eps * ((alpha/x)**12 - (alpha/x)**6)
