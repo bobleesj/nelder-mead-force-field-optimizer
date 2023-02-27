@@ -12,9 +12,9 @@ The project takes in an input file in .xyz and returns the optimized structure i
 
 ## Progrgramming Tasks:
 - [ ] Save the new coordinates into a xyz file.
-- [ ] Apply Nelder–Mead method to determine optimal coordinates
-- [ ] Express distance as a function of 2 points of x, y, z
-- [ ] Express the coordinates as a parameters
+- [x] Apply Nelder–Mead method to determine optimal coordinates
+- [x] Express distance as a function of 2 points of x, y, z
+- [x] Express the coordinates as a parameters
 - [x] Determine LP potential energy between the 2 Ar 
 - [x] Create a XYZ file of 2 Ar atoms using Avagadro
 - [x] Parse the XYZ file using the xyz_py library
