@@ -5,12 +5,14 @@ The project takes in an input file in .xyz and returns the optimized structure i
 1.	determine the xyz of each Ar atom by parsing the XYZ file.
 2.	determine the distance (r) between the two atoms as a function of x1, y1, z1, x2, y2, y3.
 3.	determine the potential using the distance in 2.
-4.	update the XYZ coordinates of the two atoms as guided by the Nelder Mead algorithm.
+4.	update the XYZ coordinates of the two atoms as guided by the Nelder Mead  algorithm.
 
 ## Further Features
-- [ ] Randomize the initial positions of atoms
+- [ ] Optimize more than 2 Ar atoms
 
 ## Progrgramming Tasks:
+- [ ] Randomize the initial positions of atoms
+- [x] Refactor the code
 - [x] Save the optimized coordinates into a xyz file.
 - [x] Apply Nelder–Mead method to determine optimal coordinates
 - [x] Express distance as a function of 2 points of x, y, z
@@ -30,7 +32,6 @@ https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf
 ## Keyboard Shortcuts:
 `CTRL` + ``` - Toggle Terminal
 `CTRL` + g - Go to Line
-
 
 ## To run the file
 ```
