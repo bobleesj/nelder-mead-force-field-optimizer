@@ -11,7 +11,7 @@ The project takes in an input file in .xyz and returns the optimized structure i
 - [ ] Randomize the initial positions of atoms
 
 ## Progrgramming Tasks:
-- [ ] Save the new coordinates into a xyz file.
+- [x] Save the optimized coordinates into a xyz file.
 - [x] Apply Nelder–Mead method to determine optimal coordinates
 - [x] Express distance as a function of 2 points of x, y, z
 - [x] Express the coordinates as a parameters

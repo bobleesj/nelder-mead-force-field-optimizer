@@ -60,7 +60,6 @@ def func(x):
 min = minimize(func, 2.5, method="nelder-mead")
 # print(min)
 
-
 def f(params):
     # print(params)  # <-- you'll see that params is a NumPy array
     x1, x2, y1, y2, z1, z2 = params # <-- for readability you may wish to assign names to the component variables
@@ -84,13 +83,22 @@ if result.success:
     print("y2:", y2)
     print("z1:", z1)
     print("z2:", z2)
-    
 
     r = np.sqrt((x1 - x2)**2 + (y1 - y2)**2 + (z1 - z2)**2)
     print(r)
 
+    # Save the xyz file as a file. Use the library
 
+    argon_coordinates_opt = [[x1, y1, z1], [x2, y2, z2]]
+
+    xyzp.save_xyz("argons_opt.xyz", atom_labels, argon_coordinates_opt)
 else:
     raise ValueError(result.message)
 
+'''
+def save_xyz
+(
+f_name: str, labels: list, coords: numpy.ndarray,
+with_numbers: bool = False, verbose: bool = True, mask: list = [], atomic_numbers: bool = False)
+'''
 
