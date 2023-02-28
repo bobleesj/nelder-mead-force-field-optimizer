@@ -66,7 +66,7 @@ def minimizeNelderMead(initial_points):
         z2 = fitted_params[5]
         r = sqrt((x1 - x2)**2 + (y1 - y2)**2 + (z1 - z2)**2)
 
-        # Save the xyz file as a file. Use the library
+        # Save the xyz file as a file
         coordinates_opt = [[x1, y1, z1], [x2, y2, z2]]
         xyzp.save_xyz("argons_opt.xyz", atom_labels, coordinates_opt)
         coordinates_opt_rounded = around(coordinates_opt, 3)
