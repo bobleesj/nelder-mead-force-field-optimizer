@@ -1,18 +1,18 @@
 # Ch393 IS Force-Field Optimizer 
 The project takes in an input file in .xyz and returns the optimized structure in .xyz with the associated energy value.
 
-## Overall Strategy
+## Overall Strategy for 3D for 2 Argon atoms
 1.	determine the xyz of each Ar atom by parsing the XYZ file.
 2.	determine the distance (r) between the two atoms as a function of x1, y1, z1, x2, y2, y3.
 3.	determine the potential using the distance in 2.
-4.	update the XYZ coordinates of the two atoms as guided by the Nelder Mead  algorithm.
+4.	update the XYZ coordinates of the two atoms as guided by the Nelder-Mead algorithm.
 
 ## Further Features
 - [ ] Optimize more than 2 Ar atoms
 
 ## Progrgramming Tasks:
-- [ ] Randomize the initial positions of atoms
-- [x] Refactor the code
+- [x] Randomize initial positions of atoms
+- [x] Refactor code into modular functions
 - [x] Save the optimized coordinates into a xyz file.
 - [x] Apply Nelder–Mead method to determine optimal coordinates
 - [x] Express distance as a function of 2 points of x, y, z
@@ -29,7 +29,7 @@ The project takes in an input file in .xyz and returns the optimized structure i
 Visual Studio Shortcuts:
 https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf
 
-## Keyboard Shortcuts:
+## Visual Studio Keyboard Shortcuts:
 `CTRL` + ``` - Toggle Terminal
 `CTRL` + g - Go to Line
 

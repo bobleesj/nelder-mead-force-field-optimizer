@@ -3,11 +3,12 @@ import numpy as np
 from scipy.optimize import minimize 
 from numpy import sqrt
 from numpy import around
+import random as rand
 
 # Do not use scientific notation
 np.set_printoptions(suppress=True)
 
-# Import xyz file
+# Import XYZ file
 def importFile(filename):
     atom_labels, cooridnates = xyzp.load_xyz(filename)
     print("Atom labels:\n", atom_labels, "\n") # List
@@ -25,15 +26,15 @@ def calculateDistanceForTwoAtoms(atom_labels, coordinates):
         print(r_rounded, "Å is the rounded distance between the unoptimized atoms. \n")
     return r
 
-# Determine E given distance, epsilon, and alpha
+# Determine LJ given distance r, ε, α
 def calculateLJPotential(r, esp, alpha):
     potential = 4 * eps * ((alpha/r)**12 - (alpha/r)**6)
     return potential
 
-# Define Constants
+# Define ε, α
 eps = 0.997 # kJ/mol
 alpha = 3.4 # Angstroms
-# LJ constants between 2 Argon (LibreText Chemistry)
+# ε, α values for Argon atoms are provided by LibreText Chemistry
 
 # Calculate
 atom_labels, cooridnates = importFile("argons.xyz")
@@ -42,6 +43,7 @@ potential = calculateLJPotential(r, eps, alpha)
 print(round(potential, 3), "(kJ/mol) is the LJ potential at d =", round(r, 3), "Å \n")
 
 
+# LJ Potential Implementation
 def LJPotential(params):
     x1, x2, y1, y2, z1, z2 = params
     x = x1 - x2
@@ -50,8 +52,8 @@ def LJPotential(params):
     return 4 * eps * ((alpha/sqrt((x)**2 + (y)**2 + (z)**2))**12
                       - (alpha/sqrt((x)**2 + (y)**2 + (z)**2))**6)
 
-def minimizeNelderMead(initial_values):
-    result = minimize(LJPotential, initial_position, method="nelder-mead")
+def minimizeNelderMead(initial_points):
+    result = minimize(LJPotential, initial_points, method="nelder-mead")
 
     if result.success:
         fitted_params = result.x
@@ -73,8 +75,11 @@ def minimizeNelderMead(initial_values):
         raise ValueError(result.message)
 
 # Run minimization
-initial_position = [0, 10, 0, 10, 0, 10]
-r, coordinates_opt_rounded, min_energy = minimizeNelderMead(initial_position)
+# random_initial_position = [0, 10, 0, 10, 0, 10] # 
+random_initial_points = np.random.random_sample(size = 6) * 10 # [x1, x2, y1, y2, z1, z2]
+print(random_initial_points)
+
+r, coordinates_opt_rounded, min_energy = minimizeNelderMead(random_initial_points)
 print("r:", r)
 print("optimized coordinates:", coordinates_opt_rounded)
 print("min energy (kJ/mol):", min_energy)
