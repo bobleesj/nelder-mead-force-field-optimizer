@@ -76,7 +76,7 @@ def minimizeNelderMead(initial_points):
 
 # Run minimization
 # random_initial_position = [0, 10, 0, 10, 0, 10] # 
-random_initial_points = np.random.random_sample(size = 6) * 10 # [x1, x2, y1, y2, z1, z2]
+random_initial_points = np.random.random_sample(size = 6) * 10 -5 # [x1, x2, y1, y2, z1, z2]
 print(random_initial_points)
 
 r, coordinates_opt_rounded, min_energy = minimizeNelderMead(random_initial_points)
