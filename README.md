@@ -13,26 +13,24 @@ The project takes in an input file in .xyz and returns the optimized structure i
 3. determine the potential as a function of r1, r2, r3. Note each r is a function of x, y, and z.
 4. update the 9 coordinates towards an optimal using the Nelder-Mead algorithm.
 
-## Overall Strategy for 3D geometry optimization of N Argon atoms (To be implemented)
-TBD
 
 ## Overall Strategy for 
 
-## Progrgramming Tasks:
+## Programming Tasks:
+- [x] Determien the number of LJ interactions for N atoms
 - [x] Propose an implementation strategy to optimize more than 2 Ar atoms
 - [x] Randomize initial positions of atoms
 - [x] Refactor code into modular functions
 - [x] Save the optimized coordinates into a xyz file.
-- [x] Apply Nelder–Mead method to determine 3D coordinates
-- [x] Express distance as a function of 2 points of x, y, z
+- [x] Apply Nelder–Mead method to find optimized structures
+- [x] Express distance as a function of 2 points of (x, y, z)
 - [x] Express the coordinates as a parameters
 - [x] Determine LP potential energy between the 2 Ar 
-- [x] Create a XYZ file of 2 Ar atoms using Avagadro
+- [x] Create a XYZ file of 2 Ar atoms using Avogadro
 - [x] Parse the XYZ file using the xyz_py library
 - [x] Determine the distance between the 2 Ar atomsatoms
 - [x] Implement Lennard-Jones potential for Argon
 - [x] Plot the potential energy curve
-- [x] Determine the gradient using 
 
 ## Toolsgit
 Visual Studio Shortcuts:

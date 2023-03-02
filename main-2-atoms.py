@@ -15,7 +15,7 @@ def importFile(filename):
     print("Atom coorindates:\n", cooridnates, "\n") # np.array
     return (atom_labels, cooridnates)
 
-# Determine distance between the 2 Ar atoms given the coordinate
+# Determine distance between 2 Ar atoms given the coordinates
 def calculateDistanceForTwoAtoms(atom_labels, coordinates):
     atom_count = xyzp.count_elements(atom_labels)
     if atom_count["Ar"] == 2:
@@ -32,9 +32,12 @@ def calculateLJPotential(r, esp, alpha):
     return potential
 
 # Define ε, α
-eps = 0.997 # kJ/mol
-alpha = 3.4 # Angstroms
+# eps = 0.997 # kJ/mol
+# alpha = 3.4 # Angstroms
 # ε, α values for Argon atoms are provided by LibreText Chemistry
+
+eps = 1 # kJ/mol
+alpha = 1 # Angstroms
 
 # Calculate
 atom_labels, cooridnates = importFile("argons.xyz")
@@ -45,7 +48,7 @@ print(round(potential, 3), "(kJ/mol) is the LJ potential at d =", round(r, 3), "
 
 # LJ Potential Implementation
 def LJPotential(params):
-    x1, x2, y1, y2, z1, z2 = params
+    x1, y1, z1, x2, y2, z2 = params
     x = x1 - x2
     y = y1 - y2
     z = z1 - z2
@@ -59,27 +62,41 @@ def minimizeNelderMead(initial_points):
         fitted_params = result.x
         min_energy = result.fun
         x1 = fitted_params[0]
-        x2 = fitted_params[1]
-        y1 = fitted_params[2]
-        y2 = fitted_params[3]
-        z1 = fitted_params[4]
+        y1 = fitted_params[1]
+        z1 = fitted_params[2]
+        x2 = fitted_params[3]
+        y2 = fitted_params[4]
         z2 = fitted_params[5]
         r = sqrt((x1 - x2)**2 + (y1 - y2)**2 + (z1 - z2)**2)
 
         # Save the xyz file as a file
-        coordinates_opt = [[x1, y1, z1], [x2, y2, z2]]
-        xyzp.save_xyz("argons_opt.xyz", atom_labels, coordinates_opt)
-        coordinates_opt_rounded = around(coordinates_opt, 3)
-        return (r, coordinates_opt_rounded, min_energy)
+        coordinates = [[x1, y1, z1], [x2, y2, z2]]
+        xyzp.save_xyz("argons_opt.xyz", atom_labels, coordinates)
+        print("\n")
+        return (r, coordinates, min_energy)
     else:
         raise ValueError(result.message)
 
-# Run minimization
-# random_initial_position = [0, 10, 0, 10, 0, 10] # 
-random_initial_points = np.random.random_sample(size = 6) * 10 -5 # [x1, x2, y1, y2, z1, z2]
-print(random_initial_points)
+# Randomize initial points where x, y, z = -5 to 5 Å
+random_initial_points = np.random.random_sample(size = 6) * 10 - 5 # [x1, y1, z1, x2, y2, z2]
+# To-do: refactor the code
+p1 = np.array([random_initial_points[0], random_initial_points[1], random_initial_points[2]])
+p2 = np.array([random_initial_points[3], random_initial_points[4], random_initial_points[5]])
 
-r, coordinates_opt_rounded, min_energy = minimizeNelderMead(random_initial_points)
-print("r:", r)
-print("optimized coordinates:", coordinates_opt_rounded)
-print("min energy (kJ/mol):", min_energy)
+# Pre-optimization
+r = np.sqrt(np.sum((p1-p2)**2, axis=0))
+energy = calculateLJPotential(r, eps, alpha)
+
+# Optimization
+r_opt, coordinates_opt, min_energy = minimizeNelderMead(random_initial_points)
+
+# Print 
+print("---NON-OPTMIZED---")
+print("Initial coordinates:", around([p1, p2], 3))
+print("Distance (Å):", round(r, 3))
+print("LJ at initial points (kJ/mol)", round(energy, 3), "\n")
+
+print("---OPTMIZED---")
+print("Coordinates:", around(coordinates_opt, 3))
+print("Optimized distance (Å):", round(r_opt, 3))
+print("Min energy (kJ/mol):", round(min_energy, 3), "\n")
