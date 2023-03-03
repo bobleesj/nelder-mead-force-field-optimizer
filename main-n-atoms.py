@@ -10,7 +10,8 @@ np.set_printoptions(suppress=True)
 
 # Parse a N-atom argon file.
 
-N = 4
+N = 3
+# Atom interaction counts:
 # 3 atoms: 1-2, 1-3, 2-3 (3)
 # 4 atoms: 1-2, 1-3, 1-4, 2-3, 2-4, 3-4 (6)
 # 5 atoms: 1-2, 1-3, 1-4, 1-5, 2-3, 2-4, 2,5, 3-4, 3-5, 4-5 (10)
@@ -22,14 +23,19 @@ print("Parsed atom coorindates:\n", cooridnates, "\n") # np.array
 
 # Loop and find the distance between all interaction
 
-# Atom interaction counts:
-
 i_list = list(range(1,N)) # 1 to 3 wher N = 4
 j_list = list(range(1,N))
 potential_count = 0
+# eps = 1
+# alpha = 1
 
+eps = 0.997 # kJ/mol
+alpha = 3.4 # Angstroms
+
+LJ_potential_sum = 0
 for i in i_list:
     for j in j_list:
+        
         if i <= j:
             potential_count += 1
             ith = i
@@ -37,40 +43,23 @@ for i in i_list:
             print("(i,j):", ith, jth)
             atom_i = cooridnates[ith - 1]
             atom_j = cooridnates[jth - 1]
-            # Determine LJ Potential
-
-            x_i = atom_i[0]
-            y_i = atom_i[1]
-            z_i = atom_i[2]
-            x_j = atom_j[0]
-            y_j = atom_j[1]
-            z_j = atom_j[2]
-
-            print(x_i, y_i, z_i)
-            print(x_j, y_j, z_j, "\n")
-
+            
             # Calculate the distance (r)
             r = np.sqrt(np.sum((atom_i-atom_j)**2, axis=0))
-            print("Distance (r)", around(r, 3))
+
+            # Calculate LJ potential
+            LJ = 4 * eps * ((alpha/r)**12 - (alpha/r)**6)
+            # Print r and LJ
+            print("r (Angstroms)", around(r, 3))
+            print("LJ potential (kJ/mol):", round(LJ, 5), "\n")
+
+            LJ_potential_sum += LJ
+            
+print("---OUTOUT---")
+print("LJ potential sum (kJ/mol):", LJ_potential_sum)
 
 print("SUMMARY:", str(N), "atoms have", str(potential_count), 
       "interactions total\n")
-
-
-
-# Save the global minimum coordinate
-# Save the file
-
-
-
-
-
-
-
-
-
-eps = 1 # kJ/mol
-alpha = 1 # Angstroms
 
 # # LJ Potential Implementation
 # def LJPotential(params):
@@ -125,4 +114,14 @@ alpha = 1 # Angstroms
 #     print("Min energy:", min_energy)
 #     print("random init position", random_initial_points)
 
-# 
+# # 
+
+#          x_i = atom_i[0]
+#             y_i = atom_i[1]
+#             z_i = atom_i[2]
+#             x_j = atom_j[0]
+#             y_j = atom_j[1]
+#             z_j = atom_j[2]
+
+#             print(x_i, y_i, z_i)
+#             print(x_j, y_j, z_j, "\n")
