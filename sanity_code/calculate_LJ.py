@@ -24,6 +24,12 @@ print("Parsed atom coorindates:\n", cooridnates, "\n") # np.array
 
 # Loop and find the distance between all interaction
 
+# Atom interaction counts:
+# 3 atoms: 1-2, 1-3, 2-3 (3)
+# 4 atoms: 1-2, 1-3, 1-4, 2-3, 2-4, 3-4 (6)
+# 5 atoms: 1-2, 1-3, 1-4, 1-5, 2-3, 2-4, 2,5, 3-4, 3-5, 4-5 (10)
+
+
 i_list = list(range(1,N))
 j_list = list(range(1,N))
 interaction_count = 0
