@@ -68,7 +68,6 @@ for i in range(1000):
     print("Min energy:", min_energy)
     print("random init position", random_initial_points)
 
-
 # Atom interaction counts:
 # 3 atoms: 1-2, 1-3, 2-3 (3)
 # 4 atoms: 1-2, 1-3, 1-4, 2-3, 2-4, 3-4 (6)
@@ -86,7 +85,8 @@ for i in i_list:
             j_atom = j+1 
             print("(i,j):", i_atom, j_atom)
             print("Let's calcjualte LJ \n")
-
             # Determine LJ Potential
-
 print("SUMMARY:", str(N), "atoms have", str(potential_count), "interactions total! \n")
+
+# Save the global minimum coordinate
+# Save the file
