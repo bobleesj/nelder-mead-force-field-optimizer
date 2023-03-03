@@ -17,6 +17,8 @@ The project takes in an input file in .xyz and returns the optimized structure i
 ## Overall Strategy for 
 
 ## Programming Tasks:
+- [ ] Parse the coordinates of N molecules
+- [ ] Parse the coordinates of 3 molecules
 - [x] Determien the number of LJ interactions for N atoms
 - [x] Propose an implementation strategy to optimize more than 2 Ar atoms
 - [x] Randomize initial positions of atoms

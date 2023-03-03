@@ -40,7 +40,7 @@ eps = 1 # kJ/mol
 alpha = 1 # Angstroms
 
 # Calculate
-atom_labels, cooridnates = importFile("argons.xyz")
+atom_labels, cooridnates = importFile("./xyz/argon_2.xyz")
 r = calculateDistanceForTwoAtoms(atom_labels, cooridnates)
 potential = calculateLJPotential(r, eps, alpha)
 print(round(potential, 3), "(kJ/mol) is the LJ potential at d =", round(r, 3), "Å \n")
@@ -71,7 +71,7 @@ def minimizeNelderMead(initial_points):
 
         # Save the xyz file as a file
         coordinates = [[x1, y1, z1], [x2, y2, z2]]
-        xyzp.save_xyz("argons_opt.xyz", atom_labels, coordinates)
+        xyzp.save_xyz("./xyz/argon_2_opt.xyz", atom_labels, coordinates)
         print("\n")
         return (r, coordinates, min_energy)
     else:
