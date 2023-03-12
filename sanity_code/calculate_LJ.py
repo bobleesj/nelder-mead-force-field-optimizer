@@ -10,7 +10,7 @@ np.set_printoptions(suppress=True)
 
 # Parse a N-atom argon file.
 
-N = 5
+N = 3
 # eps = 0.997 # kJ/mol
 # alpha = 3.4 # Angstroms
 eps = 1
