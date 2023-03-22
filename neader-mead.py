@@ -1,5 +1,4 @@
 
-
 import math
 import numpy as np
 import copy
@@ -7,28 +6,25 @@ import xyz_py as xyzp
 from numpy import sqrt
 from numpy import around
 import random as rand
-
-print("\nHello world")
-np.set_printoptions(suppress=True)
+np.set_printoptions(formatter={'float': lambda x: "{0:0.5f}".format(x)})
 
 # Global Variables
-N = 2
+N = 4
 ITERATION = 100
 FILENAME = "./xyz/argon_" + str(N)
-# EPS = 0.997 # kJ/mol
-# ALPHA = 3.4 # Angstroms
 EPS = 1
 ALPHA = 1
 
 # Import 
 atom_labels, cooridnates = xyzp.load_xyz(FILENAME + ".xyz")
 intial_coordinates = np.array(cooridnates).flatten()
-print(intial_coordinates)
+print("\nNumber of atoms:", N)
+
 min_energy = 0
 min_coordinate = []
 
 def nelder_mead(f, x_start):
-    # Step 2. Define dimension and initialize variables
+    # Step 1. Define dimension and initialize variables
     dim = len(x_start)
     prev_best = f(x_start)
     res = [[x_start, prev_best]]
@@ -53,7 +49,6 @@ def nelder_mead(f, x_start):
         x[i] = x[i] + step
         score = f(x)
         res.append([x, score]) 
-
 
     '''
     print(res)
@@ -184,11 +179,8 @@ def nelder_mead(f, x_start):
             nres.append([redx, score])
         res = nres
         
-        
-# # Step 1. Define a function of 3 variables
+# Calculate the sume of LJ potential between all pairs in atoms
 def f(x):
-    #return math.sin(x[0]) * math.cos(x[1]) * (1. / (abs(x[2]) + 1))
-    # return math.sin(x[0]) * math.cos(x[1])
     i_list = list(range(1,N)) # (1 to N - 1)
     j_list = list(range(1,N))
     LJ_sum = 0
@@ -205,15 +197,15 @@ def f(x):
                 LJ_sum += LJ
     return LJ_sum
 
-x_start = np.array(intial_coordinates)            
-value = nelder_mead(f, x_start)
-print(value)
+print("\nInitial coordinates:\n", intial_coordinates.reshape(N, -1))
+x_start = np.array(intial_coordinates)           
+print("\n---Optimization started---")
+res = nelder_mead(f, x_start)
+print("---Optimization complete---\n")
 
-LJ = f(np.array([0.26085988, 1.18855901, 0.1962963 , 0.5668863 , 0.08103074, 0.20925926]))
-print(LJ)
-#x_start = [1.0, 1.0, 1.0]
-# x_start = np.array([1.0, 1.0])
-# nelder_mead(f, x_start)
+# Output
+print("\nOptimized coordinates:\n", res[0].reshape(N, -1))
+print("\nMinimum value:", res[1], "\n")
 
 
 
