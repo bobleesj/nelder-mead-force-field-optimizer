@@ -1,4 +1,5 @@
 
+
 import math
 import numpy as np
 import copy
@@ -10,20 +11,16 @@ np.set_printoptions(formatter={'float': lambda x: "{0:0.5f}".format(x)})
 
 # Global Variables
 N = 4
-ITERATION = 100
 FILENAME = "./xyz/argon_" + str(N)
 EPS = 1
 ALPHA = 1
 
-# Import 
+# Import pre-optimized structures
 atom_labels, cooridnates = xyzp.load_xyz(FILENAME + ".xyz")
 intial_coordinates = np.array(cooridnates).flatten()
 print("\nNumber of atoms:", N)
 
-min_energy = 0
-min_coordinate = []
-
-def nelder_mead(f, x_start):
+def nelder_mead(f, x_start, step=0.1, max_iter=10000):
     # Step 1. Define dimension and initialize variables
     dim = len(x_start)
     prev_best = f(x_start)
@@ -33,16 +30,17 @@ def nelder_mead(f, x_start):
     [[[1.0, 1.0, 1.0], 0.2273243]
     '''
     # Hyper-parameters
-    step=0.1
-    max_iter = 10000
 
+    # Default 
+    # step=0.1
     no_improv = 0
     no_improve_thr = 10e-8
     no_improv_break = 100
     alpha=1.
     gamma=2.
     rho=-0.5
-    sigma=0.5
+    # sigma=0.5
+    sigma=0.2
 
     for i in range(dim):
         x = copy.copy(x_start)
@@ -104,11 +102,7 @@ def nelder_mead(f, x_start):
         print(x0)
         [0.0, 0.0, 0.0]
         '''
-        '''
-        print(len(res))
-        4
-        '''
-        
+    
         # loop through the top N best points
         for tup in res[:-1]:
             # print("Iterating through", tup)
@@ -126,6 +120,7 @@ def nelder_mead(f, x_start):
                 x0[i] += c / (len(res)-1)
                 # For each iteration, you add divided by N-dim points
                 '''
+                # This is for 2D as an example
                 # #Iterating through [[1.0, 1.1], 0.38168797500102275]
                 # [0.5 0. ] 
                 # [0.5  0.55] 
@@ -165,14 +160,14 @@ def nelder_mead(f, x_start):
         # Step 7. Contraction (when rscore is bad)
         xc = x0 + rho * (x0 - res[-1][0])
         cscore = f(xc)
-        if cscore < res[-1][-1]:
+        if cscore < res[-1][-1]: # only if contract pt is better than the worst
             del res[-1]
             res.append([xc, cscore])
             continue
 
-        # Step 8. Reduction
+        # Step 8. Reduction (when rscore is still bad)
         x1 = res[0][0] # best point
-        nres = []
+        nres = [] # collect the result
         for tup in res:
             redx = x1 + sigma * (tup[0] - x1)
             score = f(redx)
@@ -206,6 +201,5 @@ print("---Optimization complete---\n")
 # Output
 print("\nOptimized coordinates:\n", res[0].reshape(N, -1))
 print("\nMinimum value:", res[1], "\n")
-
 
 
