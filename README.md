@@ -11,7 +11,7 @@
 3. Finding Minimum of Lennard-Jones Potential Clusters
 4. Finding Minimum of Flexible Water Model with 2 Molecules
 5. Rigid Body Optimization with TIP3P
-6. Future Works
+6. Conclusion and Future Works
 7. Acknowledgemnets
 
 ## 1. Overview
