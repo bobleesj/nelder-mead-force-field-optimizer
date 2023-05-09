@@ -1,8 +1,9 @@
-# Independent Study Research Problem III Final Report
+# Ch393 IS Research Problem III Final Report
 - Sangjoon (Bob) Lee, ChE'23
 - Ch393 Research Problem III I.S. 
 - Spring 2023
-- Prof. Robert Q. Topper
+- Advisor - Prof. Robert Q. Topper
+- The Cooper Union for the Advancement of Science and Art 
 
 ## Table of Contents
 1. Overview
@@ -16,12 +17,12 @@
 ## 1. Overview
 In the Spring 2023 IS semester, the primary goal of the project was to implement a gradient-free optimization algorithm. To accomplish this, a Python script was created to implement the algorithm, and additional Python scripts were developed to apply the Nelder-Mead simplex search algorithm for determining the optimal positions of atoms. The objective function to be minimized incorporated both the Leonard Jones potential and Ferguson's flexible water model.
 
-The report is organized into three sections. The first section offers an overview of the Nelder-Mead algorithm, while the second and third sections delve into the application of the Nelder-Mead algorithm for finding the global minimum of Leonard Jones potential cluster systems for 2 to 5 atoms and the global minimum of water clusters with 2 molecules using Ferguson's flexible water model, respectively. The final section examines the process of performing rigid-body optimization for a system of two water molecules by doubling the bond and angle constants.
+The report is organized into four sections. The first section offers an overview of the Nelder-Mead algorithm, while the second and third sections delve into the application of the Nelder-Mead algorithm for finding the global minima of Leonard-Jones potential cluster systems for 2 to 5 atoms and the global minimum of water clusters with 2 molecules using Ferguson's flexible water model, respectively. The final section examines the process of performing rigid-body optimization for a system of two water molecules.
 
 ## 2. Introduction to Nelder-Mead Algorithm
 The Nelder-Mead optimization algorithm, also known as the "simplex method," is a popular optimization method for multidimensional unconstrained problems. It is based on the geometric transformations of a simplex, which is a polytope with N+1 vertices in N-dimensional space. The algorithm uses four main operations to move the simplex: `reflection`, `expansion`, `contraction`, and `shrink`. These operations are used to explore the search space and find the minimum of a function.
 
-The goal is to make the simplex smaller and explore the search space near the best vertex more closely. The Nelder-Mead algorithm iteratively applies these operations until a stopping criterion is met, such as a maximum number of iterations or a predefined tolerance level. The method is relatively easy to implement, and it can be effective for finding local minima in problems with few dimensions. The following diagram illustrates the search patterns for the minimum based on the set of moves described earlier.
+The goal is to make the simplex smaller and explore the search space near the best vertex more closely. The Nelder-Mead algorithm iteratively applies these operations until a stopping criterion is met, such as a maximum number of iterations or a predefined tolerance level. The method is relatively easy to implement, and it can be effective for finding local minima in problems with low dimensions. The following diagram illustrates the search patterns for the minimum based on the set of moves described earlier.
 
 <img src="./img/nelder_mead.gif" alt="drawing" width="500"/>
 
@@ -66,6 +67,9 @@ The output of the minimize function is a tuple containing the minimum coordinate
 
 The minimum energy value is then extracted from the result and stored in the `min_energy` variable. In this case, the minimum energy value is approximately -3.
 
+> Note: All scripts mentioned in this README.md were tested using Python 3.9.7 on a 24-inch M1 iMac with macOS Big Sur Version 11.5.1
+
+
 ## 3. Finding Minimum of Lennard-Jones Potential Clusters
 
 ### 3.1 Lennard-Jones Potential Overview
@@ -87,7 +91,7 @@ One of the most important steps is determining the number of interactions betwee
 | 3 | 4                 | 1-2, 1-3, 1-4, 2-3, 2-4, 3-4                     |
 | 4 | 6                 | 1-2, 1-3, 1-4, 1-5, 2-3, 2-4, 2,5, 3-4, 3-5, 4-5 |
 
-The `lj_potential` function, for example, successfully calcualtes the total number non-bonded interactions and determines the LJ potnetial energy given the set of coordinates.
+The `lj_potential` function, for example, successfully calculates the total number non-bonded interactions and determines the LJ potnetial energy given the set of coordinates.
 
 
 ```python
@@ -110,9 +114,9 @@ def lj_potential(params):
 ```
 
 ### 3.3 Application of Nelder-Mead for LJ Clusters
-`lj_clusters_opt.py` can be used to the global minimum of a Lennard-Jones (LJ) potential system for a given set of argon atoms using the Nelder-Mead optimization algorithm. The initial coordinates of the argon atoms are loaded from an input `.xyz` file provided by the user. The user can also choose to add perturbation to the initial positions of the atoms. 
+`lj_clusters_opt.py` is used to determine the global minimum of a Lennard-Jones (LJ) potential system for a given set of argon atoms using the Nelder-Mead optimization algorithm. The initial coordinates of the argon atoms are loaded from an input `.xyz` file provided by the user. The user can also choose to add perturbation to the initial positions of the atoms.
 
-The script calculates the LJ potential energy for the system, and then iterates over a specified number of optimization steps using the Nelder-Mead algorithm. For each iteration, the algorithm tries to minimize the LJ potential energy of the system, either from the initial coordinates or from perturbed initial coordinates, depending on the user's choice.
+The script calculates the LJ potential energy for the system, and then iterates over a specified number. For each iteration, the algorithm tries to minimize the LJ potential energy of the system, either from the initial coordinates or from perturbed initial coordinates, depending on the user's choice.
 
 After each iteration, the code prints the minimum energy found and updates the minimum energy and corresponding coordinates if a lower energy is found. Finally, the optimized coordinates and the lowest energy found are saved to new files with the suffix `_opt.xyz` and `_opt.txt`, respectively.
 
@@ -154,10 +158,10 @@ Lowest energy found -5.99999999999929
  [ 0.88892803  0.04841085  1.16711785]] 
  ```
 
-Now, there is a file called `argon_4_opt.txt` and `argon_4_opt.xyz` saved in the same folder where the original structure is stored.
+Now, there is a file called `argon_4_opt.txt` and `argon_4_opt.xyz` saved in the same folder where the original initial structure is stored.
 
 ### 3.3.2 Accuracy Test
-Using the ε and σ value of 1, the script was able to determine the global minimum of LJ clsuters from 2 to 5 atoms with the values inthe following table. The unit of energy is the pair well depth.
+Using the `ε` and `σ` value of 1, the script was able to determine the global minimum of LJ clusters from 2 to 5 atoms with the values inthe following table. The unit of energy is the pair well depth.
 
 | N | My code (rounded)  | Cambridge Energy Landscape Database by [J. Doye](http://doye.chem.ox.ac.uk/jon/structures/LJ/tables.150.html)|
 |---|---------------|--------------|
@@ -167,14 +171,14 @@ Using the ε and σ value of 1, the script was able to determine the global mini
 | 5 | -9.103852     | -9.103852    |
 
 ## 4. Finding Minimum of Flexible Water Model for Dimer
-The second application of the Nelder-Mead algorithm was determining the bond lenghts, bond angles, and inter-atomic distances based on the Furgerson flexible water model [1] for 2 water molecules.
+The second application of the Nelder-Mead algorithm was determining the bond lenghts, bond angles, and inter-atomic distances based on the Fergurson flexible water model [1] for 2 water molecules.
 
 ### 4.1 Introduction to Flexible Water Model
 The optimization is performed using the Nelder-Mead algorithm to minimize the Ferguson potential energy function, which is a custom potential function combining bond stretching, angle bending, Lennard-Jones, and Coulombic interactions with the following equation.
 
 <img src="./img/flexible_water_model_equation.png" alt="drawing" width="500"/>
 
-The parameters used in the above equation are tabualted as the following.
+The parameters used in the above equation are tabulated as the following.
 
 | Parameter | Value       | Description                             | Units                   |
 |-----------|-------------|-----------------------------------------|-------------------------|
@@ -250,8 +254,8 @@ While the optimization has not perfectly converged the bond lengths and angles t
 | r3 (O2-H1) | 1.003 Å       | 1.006 Å           |
 | r4 (O2-H2) | 1.003 Å       | 1.003 Å           |
 | r5 (O1-O2) | 2.743 Å       | 2.748 Å           |
-| angle1     | 107.6°        | 107.7 Å           |
-| angle2     | 108.5°        | 108.4 Å           |
+| angle1     | 107.6°        | 107.7°            |
+| angle2     | 108.5°        | 108.4°            |
 
 ## 5 Rigid Body Optmization
 The third application of the Nelder-Mead algorithm focuses on studying the behavior of water dimers as the force constants for vibrations and angles are progressively increased.
